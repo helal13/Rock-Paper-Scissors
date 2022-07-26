@@ -1,35 +1,61 @@
-// Variables
-let userSelection;
+// -- Variables
+
+const buttons = Array.from(document.querySelectorAll("button"));
+const choices = ["rock", "paper", "scissors"];
+const container = document.querySelector("#container");
 let computerSelection;
 let computerScore = 0;
 let userScore = 0;
-const choices = ["Rock", "Paper", "Scissors"];
 
-// Game Logic
-function playRound(computerSelection, userSelection) {
-  userSelection = prompt("Write Rock, Paper, or Scissors");
+// -- Helper Functions
+
+function getUserSelection(e) {
+  userSelection = e.target.value;
+}
+for (const button of buttons) {
+  button.addEventListener("click", getUserSelection);
+  button.addEventListener("click", playRound);
+}
+
+// -- Game Logic
+
+function playRound(computerSelection, getUserSelection) {
   computerSelection = choices[Math.floor(Math.random() * choices.length)];
-  computerSelection = computerSelection.toLowerCase();
-  userSelection = userSelection.toLowerCase();
+  if (userScore === 5 || computerScore === 5) return;
   if (computerSelection == userSelection) {
     computerScore = computerScore;
     userScore = userScore;
-    console.log(`User score: ${userScore}    Machine score: ${computerScore}`);
-    return "This is a Tie";
+    const resultDiv = document.createElement("div");
+    const score = document.createElement("h2");
+    const message = document.createElement("h3");
+    score.textContent = `User score: ${userScore}    Machine score: ${computerScore}`;
+    message.textContent = "This is a Tie";
+    resultDiv.appendChild(score);
+    resultDiv.appendChild(message);
+    container.appendChild(resultDiv);
   } else if (
     (computerSelection == "rock" && userSelection == "scissors") ||
     (computerSelection == "paper" && userSelection == "rock") ||
     (computerSelection == "scissors" && userSelection == "paper")
   ) {
     computerScore++;
-    console.log(`User score: ${userScore}    Machine score: ${computerScore}`);
-    return `The machine chose ${computerSelection}, you lose!`;
+    const resultDiv = document.createElement("div");
+    const score = document.createElement("h2");
+    const message = document.createElement("h3");
+    score.textContent = `User score: ${userScore}    Machine score: ${computerScore}`;
+    message.textContent = `The machine chose ${computerSelection}, you lose!`;
+    resultDiv.appendChild(score);
+    resultDiv.appendChild(message);
+    container.appendChild(resultDiv);
   } else {
     userScore++;
-    console.log(`User score: ${userScore}    Machine score: ${computerScore}`);
-    return `You win, the machine chose ${computerSelection}`;
+    const resultDiv = document.createElement("div");
+    const score = document.createElement("h2");
+    const message = document.createElement("h3");
+    score.textContent = `User score: ${userScore}    Machine score: ${computerScore}`;
+    message.textContent = `You win, the machine chose ${computerSelection}`;
+    resultDiv.appendChild(score);
+    resultDiv.appendChild(message);
+    container.appendChild(resultDiv);
   }
-}
-for (let i = 0; i < 5; i++) {
-  console.log(playRound(computerSelection, userSelection));
 }
