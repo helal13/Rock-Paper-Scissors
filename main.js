@@ -58,4 +58,13 @@ function playRound(computerSelection, getUserSelection) {
     resultDiv.appendChild(message);
     container.appendChild(resultDiv);
   }
+  if (userScore === 5) {
+    const winner = document.createElement("h1");
+    winner.textContent = `You are The Winner`;
+    container.append(winner);
+  } else if (computerScore === 5) {
+    const winner = document.createElement("h1");
+    winner.textContent = `Machine is the Winner`;
+    container.append(winner);
+  }
 }
